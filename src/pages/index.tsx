@@ -48,31 +48,30 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <Card className="w-[350px]">
               <CardHeader>
-                <CardTitle>Create project</CardTitle>
+                <CardTitle>New Pick</CardTitle>
                 <CardDescription>
-                  Deploy your new project in one-click.
+                  Add yourself a merry little new pick
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form>
                   <div className="grid w-full items-center gap-4">
                     <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="name">Name</Label>
-                      <Input id="name" placeholder="Name of your project" />
-                    </div>
                     <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="framework">Framework</Label>
+                      <Label htmlFor="framework">Item</Label>
+                    </div>
                       <Select>
                         <SelectTrigger id="framework">
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent position="popper">
-                          <SelectItem value="next">Next.js</SelectItem>
-                          <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                          <SelectItem value="astro">Astro</SelectItem>
-                          <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                          <SelectItem value="tvshow">TV Show</SelectItem>
+                          <SelectItem value="videogame">Video Game</SelectItem>
+                          <SelectItem value="book">Book</SelectItem>
+                          <SelectItem value="sport">Sport</SelectItem>
                         </SelectContent>
                       </Select>
+                      <Input id="name" placeholder="Name of your project" />
                     </div>
                   </div>
                 </form>
