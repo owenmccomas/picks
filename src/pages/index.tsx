@@ -18,12 +18,20 @@ import {
 } from "@/components/ui/select";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
-
+import Nav from "~/layouts";
 import { api } from "~/utils/api";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const router = useRouter();
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.data?.user.id) {
+      void router.push(`/u/${session.data?.user.id}`);
+    }
+  }, []);
 
   return (
     <>
@@ -32,7 +40,7 @@ export default function Home() {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className=" bg-bg flex min-h-screen flex-col items-center justify-center">
+      <Nav>
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-fg text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             Picks
@@ -75,38 +83,8 @@ export default function Home() {
               </CardFooter>
             </Card>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
-            <AuthShowcase />
-          </div>
         </div>
-      </main>
+      </Nav>
     </>
-  );
-}
-
-function AuthShowcase() {
-  const { data: sessionData } = useSession();
-
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined },
-  );
-
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
-    </div>
   );
 }
